@@ -1,5 +1,6 @@
 import {render} from './board.js';
 import {Board} from './board.js';
+import {Point, addOnMouseDownEvent} from './canvas.js'; 
 import {bindCanvasEvents} from './canvas.js';
 import {getCanvasContext} from './canvas.js';
 
@@ -26,5 +27,8 @@ window.onload = () => {
 			x.fillText(String(block.nearCount), i*20, j*20); 
 		}
 	}
+
+	addOnMouseDownEvent((button, p) => 
+		alert(`mousedown button: ${button==0?'left':'right'}, board location: (${p.x},${p.y})`));
 
 }

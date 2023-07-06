@@ -1,25 +1,22 @@
-import * as canvas from './canvas.js'
 
-export function render() {
-
-	// init
-	let ctx = canvas.getCanvasContext();
-	ctx.fillStyle = 'rgb(200,200,200)';
-	ctx.fillRect(0, 0, 800, 800);
-
-	// create lines
-	ctx.fillStyle = 'rgb(0,0,0)';
-	for (let i=20; i<800; i+=20) {
-		ctx.fillRect(i, 0, 1, 800);
-		ctx.fillRect(0, i, 800, 1);
-	}
+// Location object that has converted 
+// value of real pixel-points mapped to corresponding blocks of board. (0 to size-1)
+export function Point(x,y) {
+	this.x = x;
+	this.y = y;
+}
+Point.createFromPixelPoints = (pX, pY) => {
+	return new Point(Math.floor(pX/20), Math.floor(pY/20));
 }
 
-export function Block(isMine) {
+export function Block(isMine, point) {
 	this.isMine = isMine;
+	this.point = point;
 	this.isCleared = false;
 	this.isFlagged = false;
 	this.nearCount = 0;
+	this.toRealPixelPoints = 
+		() => [this.point.x * 20, this.point.y * 20];
 }
 
 export function Board(mineCount = 400) {
@@ -39,7 +36,7 @@ export function Board(mineCount = 400) {
 		// Push blocks
 		for (let i=0; i<40; i++)
 			for (let j=0; j<40; j++)
-				this.map[i][j] = new Block(false);
+				this.map[i][j] = new Block(false, new Point(i, j));
 
 		// Determinte mine location
 		for (let i=0; i<mineCount; i++) {

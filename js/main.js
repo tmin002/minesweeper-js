@@ -1,18 +1,16 @@
-import {render} from './board.js';
-import {Board} from './board.js';
-import {Point, addOnMouseDownEvent} from './canvas.js'; 
-import {bindCanvasEvents} from './canvas.js';
-import {getCanvasContext} from './canvas.js';
+import * as render from './canvasRender.js';
+import {Board, Point} from './board.js';
+import * as canvasElement from './canvasElement.js'; 
 
 // minesweeper board map
 const mineBoard = new Board(50);
 
 window.onload = () => {
-	render();
-	bindCanvasEvents();
+	render.init();
+	canvasElement.bindCanvasEvents();
 	mineBoard.initMap();
 	
-	let x = getCanvasContext();
+	let x = canvasElement.getCanvasContext();
 	for (let i=0; i<40; i++) {
 		for (let j=0; j<40; j++) {
 			let block = mineBoard.map[i][j];
@@ -28,7 +26,7 @@ window.onload = () => {
 		}
 	}
 
-	addOnMouseDownEvent((button, p) => 
+	canvasElement.addOnMouseDownEvent((button, p) => 
 		alert(`mousedown button: ${button==0?'left':'right'}, board location: (${p.x},${p.y})`));
 
 }

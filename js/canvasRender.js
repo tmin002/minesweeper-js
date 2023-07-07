@@ -16,7 +16,18 @@ export function init() {
 }
 
 export function updateBlock(block) {
+	let ctx = canvasElement.getCanvasContext();
 	let rp = block.toRealPixelPoints();
 	ctx.fillStyle = 'rgb(255,0,0)';
-	ctx.fillRect(rp[0], rp[1], 19, 19);
+	ctx.fillRect(rp[0]+1, rp[1]+1, 19, 19);
+
+	if (block.isCleared) {
+		ctx.fillStyle = 'rgb(230,230,230)';
+		ctx.fillRect(rp[0]+1, rp[1]+1, 19, 19);
+		ctx.fillStyle = 'rgb(0,0,0)';
+		ctx.fillText(block.nearCount, rp[0]+1, rp[1]+1);
+	} else {
+		ctx.fillStyle = 'rgb(200,200,200)';
+		ctx.fillRect(rp[0]+1, rp[1]+1, 19, 19);
+	}
 }

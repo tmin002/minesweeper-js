@@ -1,5 +1,5 @@
 import * as render from './canvasRender.js';
-import {Board, Point} from './board.js';
+import {Block, Board, Point} from './board.js';
 import * as canvasElement from './canvasElement.js'; 
 
 // minesweeper board map
@@ -21,12 +21,15 @@ window.onload = () => {
 				continue;
 			}
 
-			x.fillStyle = 'rgb(0,255,0)';
+			x.fillStyle = 'rgb(100,255,0)';
 			x.fillText(String(block.nearCount), i*20, j*20); 
 		}
 	}
 
-	canvasElement.addOnMouseDownEvent((button, p) => 
-		alert(`mousedown button: ${button==0?'left':'right'}, board location: (${p.x},${p.y})`));
+	canvasElement.addOnMouseDownEvent((button, p) => {
+		console.log(button);
+		render.updateBlock(new Block(0, p));
+	});
+	//	alert(`mousedown button: ${button==0?'left':'right'}, board location: (${p.x},${p.y})`));
 
 }
